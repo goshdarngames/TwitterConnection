@@ -291,6 +291,11 @@ class TwitterConnection:
 
     #------------------------------------------------------------------------
 
+    def send_media_message ( self, msg, mediaList ):
+        pass
+
+    #------------------------------------------------------------------------
+
     def _init_latest_mention ( self ):
         """
         Returns the id of the most recent mention.
