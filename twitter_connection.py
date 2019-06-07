@@ -295,6 +295,8 @@ class TwitterConnection:
         
         #call api to upload media and get media id list
 
+        logging.info ( "input msg: "+msg+"mediaList "+str ( mediaList ) )
+
         upload_media = lambda api : \
             [ api.media_upload ( i ).media_id for i in mediaList ]
 
