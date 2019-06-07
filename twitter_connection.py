@@ -295,7 +295,7 @@ class TwitterConnection:
         
         #call api to upload media and get media id list
 
-        upload_media = lambda api : \ 
+        upload_media = lambda api : \
             [ api.media_upload ( i ).media_id for i in mediaList ]
 
         media_ids = self.call_twitter_api ( upload_media )
