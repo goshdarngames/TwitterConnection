@@ -292,7 +292,20 @@ class TwitterConnection:
     #------------------------------------------------------------------------
 
     def send_media_message ( self, msg, mediaList ):
-        pass
+        
+        #call api to upload media and get media id list
+
+        upload_media = lambda api : 
+            [ api.media_upload ( i ).media_id for i in mediaList ]
+
+        media_ids = self.call_twitter_api ( upload_media )
+
+        #post message with media
+
+        update_with_media = lambda api :
+            api.update_with_media ( media_ids, msg )
+
+        return self.call_twitter_api ( update_with_media )
 
     #------------------------------------------------------------------------
 
