@@ -307,7 +307,7 @@ class TwitterConnection:
         #post message with media
 
         update_with_media = lambda api : \
-            api.update_with_media ( media_ids = media_list,
+            api.update_with_media ( mediaList [ 0 ],
                                     status = msg )
 
         return self.call_twitter_api ( update_with_media )
