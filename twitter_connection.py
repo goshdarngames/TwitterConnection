@@ -298,12 +298,15 @@ class TwitterConnection:
         upload_media = lambda api : \
             [ api.media_upload ( i ).media_id for i in mediaList ]
 
-        media_ids = self.call_twitter_api ( upload_media )
+        media_list = self.call_twitter_api ( upload_media )
+
+        logging.info ( "media_list"+str ( media_list ) )
 
         #post message with media
 
         update_with_media = lambda api : \
-            api.update_with_media ( media_ids, msg )
+            api.update_with_media ( media_ids = media_list,
+                                    status = msg )
 
         return self.call_twitter_api ( update_with_media )
 
