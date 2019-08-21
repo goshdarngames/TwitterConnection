@@ -174,6 +174,11 @@ class CursorIterWrapper:
 
 #----------------------------------------------------------------------------
 
+class TwitterNetworkException ( Exception ):
+    pass
+
+#----------------------------------------------------------------------------
+
 class TwitterConnection:
 
     def __enter__ ( self ):
@@ -231,34 +236,22 @@ class TwitterConnection:
 
         except tweepy.RateLimitError as e:
 
-            logging.warning ( "Rate-limit Error:  %s", e )
-
-            time.sleep ( TWEEP_RATE_ERROR_SLEEP )
+            raise
 
         #Most likely thrown during network error
         except tweepy.TweepError as e:
 
-            logging.warning ( "Tweepy Error: %s  ", e )
+            raise TwitterNetworkException 
 
-            time.sleep ( NETWORK_ERROR_SLEEP )
 
         except ( SSLError, Timeout, ConnectionError, NewConnectionError ):
 
-            logging.warning ( "Network Error:  ", exc_info=True )
-
-            time.sleep ( NETWORK_ERROR_SLEEP )
+            raise TwitterNetworkException 
 
         #special case for tweepy cursor calls when no more items
         except StopIteration:
 
             raise StopIteration
-
-        except Exception:
-            
-            logging.critical ( "Unexpected Error during twitter API call:  ",
-                               exc_info=True )
-
-            time.sleep ( UNEXPECTED_ERROR_SLEEP )
 
         return api_return 
 
